@@ -1,15 +1,10 @@
-import { ReactNode } from 'react';
 import NavBar from './NavBar';
 
-type ComponentProps = {
-  children: ReactNode;
-};
-
-export default function Layout({ children }: ComponentProps) {
+export default function Layout({ children }: React.PropsWithChildren) {
   return (
     <>
       <NavBar />
-      <div></div>
+      <div>{children}</div>
     </>
   );
 }
