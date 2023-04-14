@@ -1,9 +1,5 @@
-import axios from '@/lib/axios';
-
-const API_KEY = process.env.API_KEY;
-
 export const getMovies = async () => {
-  const { data } = await axios.get(`/popular?api_key=${API_KEY}`);
+  const { results } = await (await fetch('/api/movies')).json();
   console.log(`popular movies fetched`);
-  return data;
+  return results;
 };

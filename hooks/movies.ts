@@ -26,5 +26,5 @@ export interface IMovieProps {
 }
 
 export const useMovies = () => {
-  return useQuery<IGetMoviesProps>(['movies'], () => getMovies());
+  return useQuery<IMovieProps[]>(['movies'], () => getMovies());
 };

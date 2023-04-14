@@ -8,12 +8,10 @@ export default function Home() {
 
   if (isLoading) return <h4>Loading...</h4>;
 
-  console.log(data?.results.map((movie) => movie.id));
-
   return (
     <div className="container">
       <Seo title="Home"></Seo>
-      {data!.results.map((movie) => (
+      {data!.map((movie) => (
         <div className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           <h4>{movie.original_title}</h4>
@@ -23,7 +21,7 @@ export default function Home() {
         .container {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          padding: 80px 200px;
+          padding: 50px;
           gap: 20px;
         }
         .movie {
@@ -32,7 +30,7 @@ export default function Home() {
           align-items: center;
         }
         .movie img {
-          max-width: 80%;
+          max-width: 100%;
           border-radius: 12px;
           transition: transform 0.2s ease-in-out;
           box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -48,17 +46,3 @@ export default function Home() {
     </div>
   );
 }
-
-export const getServerSideProps = async () => {
-  const queryClient = new QueryClient();
-
-  // prefetch data on the server
-  await queryClient.fetchQuery(['movies'], () => getMovies());
-
-  return {
-    props: {
-      // dehydrate query cache
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
