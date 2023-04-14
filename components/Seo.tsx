@@ -5,9 +5,10 @@ type ComponentProps = {
 };
 
 export default function Seo({ title }: ComponentProps) {
+  const message = `${title} | Next Movies`;
   return (
     <Head>
-      <title>{title} | Next Movies</title>
+      <title>{message}</title>
     </Head>
   );
 }
