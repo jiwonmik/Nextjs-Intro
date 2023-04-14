@@ -1,17 +1,17 @@
 import { getMovies } from '@/api/movies';
 import Seo from '@/components/Seo';
-import { useMovies } from '@/hooks/movies';
+import { IMovieProps, useMovies } from '@/hooks/movies';
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 
-export default function Home() {
-  const { data, isLoading } = useMovies();
+type HomeProps = {
+  results: IMovieProps[];
+};
 
-  if (isLoading) return <h4>Loading...</h4>;
-
+export default function Home({ results }: HomeProps) {
   return (
     <div className="container">
       <Seo title="Home"></Seo>
-      {data!.map((movie) => (
+      {results!.map((movie) => (
         <div className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           <h4>{movie.original_title}</h4>
@@ -45,4 +45,13 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const { results } = await (await fetch('http://localhost:3000/api/movies')).json();
+  return {
+    props: {
+      results,
+    },
+  };
 }
